@@ -54,10 +54,10 @@
     .topbar{height:72px;display:flex;align-items:center;gap:14px;padding:0 22px;background:#fff;border-bottom:1px solid var(--line);flex:none;z-index:15}
     .icon-btn{width:36px;height:36px;border:1px solid var(--line);border-radius:8px;background:#fff;display:grid;place-items:center;color:#597089;position:relative;transition:.18s}
     .icon-btn:hover{border-color:#a9c9f2;color:var(--blue);background:#f6faff}.icon-btn svg{width:17px;height:17px}
-    .top-title{min-width:260px}.top-title h1{font-size:17px;margin:0;font-weight:700;color:#122c49;letter-spacing:.2px}.top-title p{font-size:11px;color:var(--muted);margin:4px 0 0}
+    .top-title{min-width:260px}.top-title h1{font-size:17px;margin:0;font-weight:700;color:#122c49;letter-spacing:.2px}
     .global-search{margin-left:auto;width:min(360px,26vw);position:relative}.global-search input{width:100%;height:38px;border:1px solid var(--line);background:#f7f9fc;border-radius:9px;padding:0 38px 0 36px;outline:none;transition:.18s}.global-search input:focus{border-color:#8bbaf5;background:#fff;box-shadow:0 0 0 3px rgba(23,105,224,.08)}.global-search>svg{position:absolute;left:12px;top:10px;width:17px;color:#7c8da1}.shortcut{position:absolute;right:9px;top:9px;border:1px solid var(--line);border-radius:4px;color:#8191a4;font-size:10px;padding:2px 5px;background:#fff}
     .top-actions{display:flex;gap:8px}.badge{position:absolute;right:-3px;top:-4px;min-width:17px;height:17px;line-height:17px;border-radius:10px;background:var(--red);color:#fff;font-size:9px;text-align:center;padding:0 4px;border:2px solid #fff}
-    .userbox{height:42px;display:flex;align-items:center;gap:9px;padding:0 5px 0 8px;border-left:1px solid var(--line);margin-left:2px}.avatar{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#1a6edc,#55a8ff);color:#fff;display:grid;place-items:center;font-weight:700}.userbox b{font-size:12px}.userbox small{display:block;color:var(--muted);font-size:10px;margin-top:2px}
+    .userbox{height:42px;display:flex;align-items:center;gap:9px;padding:0 5px 0 8px;border-left:1px solid var(--line);margin-left:2px}.avatar{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#1a6edc,#55a8ff);color:#fff;display:grid;place-items:center;font-weight:700}.userbox b{font-size:12px}
     .crumbbar{height:42px;padding:0 22px;display:flex;align-items:center;gap:7px;background:#fff;border-bottom:1px solid var(--line);color:#77889a;flex:none}.crumbbar svg{width:13px;height:13px}.crumb-current{color:#25486d;font-weight:600}.demo-flag{margin-left:auto;display:flex;align-items:center;gap:6px;color:#8a6b25;background:#fff9e9;border:1px solid #f4df9c;padding:4px 8px;border-radius:5px;font-size:11px}.demo-flag:before{content:"";width:6px;height:6px;border-radius:50%;background:#e7a928}
     .tabbar{height:40px;display:flex;align-items:flex-end;gap:3px;padding:0 20px;background:#f6f8fb;border-bottom:1px solid var(--line);overflow:auto;flex:none}.page-tab{height:34px;border:1px solid transparent;border-bottom:0;background:transparent;color:#667a90;border-radius:7px 7px 0 0;padding:0 11px;display:flex;align-items:center;gap:7px;white-space:nowrap}.page-tab:hover{background:#eef4fb}.page-tab.active{background:#fff;color:var(--blue);border-color:var(--line);font-weight:600}.page-tab .tab-close{opacity:.45;font-size:15px;line-height:1}.page-tab .tab-close:hover{opacity:1;color:var(--red)}
     .content{padding:18px 20px 28px;overflow:auto;flex:1;position:relative}.content:before{content:"";position:fixed;pointer-events:none;right:0;top:154px;width:420px;height:260px;background:radial-gradient(circle at top right,rgba(44,132,236,.065),transparent 66%)}
@@ -135,13 +135,13 @@
     <section class="main">
       <header class="topbar">
         <button class="icon-btn" data-action="collapse" title="收起菜单"><svg><use href="#i-menu"/></svg></button>
-        <div class="top-title"><h1>铀浓缩生产数据智能监盘系统</h1><p>业务平台 · V2.1评审修改版</p></div>
+        <div class="top-title"><h1>铀浓缩生产数据智能监盘系统</h1></div>
         <div class="global-search"><svg><use href="#i-search"/></svg><input id="globalSearch" placeholder="搜索设备、测点、工单或功能"><span class="shortcut">⌘ K</span></div>
         <div class="top-actions">
           <button class="icon-btn" data-action="refresh" title="刷新数据"><svg><use href="#i-refresh"/></svg></button>
           <button class="icon-btn" data-action="notifications" title="消息通知"><svg><use href="#i-bell"/></svg><span class="badge" id="notifyBadge">3</span></button>
         </div>
-        <div class="userbox" data-action="personal-settings" title="个人设置"><div class="avatar">管</div><div><b>系统管理员</b><small>全部数据权限 · 个人设置</small></div></div>
+        <div class="userbox" data-action="personal-settings" title="个人设置"><div class="avatar">管</div><div><b>系统管理员</b></div></div>
       </header>
       <div class="crumbbar"><svg><use href="#i-home"/></svg><span>业务平台</span><span>/</span><span id="crumbParent">实时监控</span><span>/</span><span class="crumb-current" id="crumbCurrent">运行总览</span><span class="demo-flag">V2.1评审修改版</span></div>
       <div class="tabbar" id="tabbar"></div>
@@ -687,7 +687,6 @@
   document.addEventListener("click",e=>{if(!e.target.closest(".popover")&&!e.target.closest("[data-action='notifications']")&&!e.target.closest("#globalSearch"))document.querySelectorAll(".popover").forEach(x=>x.remove())});
 
   renderNav();renderTabs();renderPage();
-  setInterval(()=>{const p=document.querySelector(".top-title p");if(p){const now=new Date();p.textContent=`业务平台 V2.1评审修改版 · ${now.toLocaleDateString("zh-CN")} ${now.toLocaleTimeString("zh-CN",{hour12:false})}`}},1000);
   </script>
 </body>
 </html>
