@@ -38,7 +38,37 @@
     body.variant-b .dashboard-grid{grid-template-columns:.82fr 1.25fr .9fr}body.variant-b .factory-map{background:linear-gradient(145deg,#fff,#eef6fd)}body.variant-c .metric-grid{grid-template-columns:repeat(3,1fr)}body.variant-c .metric:nth-child(4),body.variant-c .metric:nth-child(5){display:none}body.variant-c .dashboard-grid{height:calc(100vh - 296px);grid-template-columns:1.3fr .9fr .9fr}
     @media(max-width:1500px){.brand{min-width:390px}.brand h1{font-size:17px}.nav-btn{padding:0 10px}.dashboard-grid{grid-template-columns:1fr 1fr .82fr}.system-layout,.twin-layout{grid-template-columns:minmax(0,1fr) 300px}.metric-value{font-size:24px}.factory-card{width:125px}.analysis-grid{grid-template-columns:1fr 1.3fr .85fr}}
     @media(max-width:1150px){body{overflow:auto}.app{min-width:1100px}.screen{overflow:visible}.topbar{min-width:1100px}.top-actions .top-btn span{display:none}.dashboard-grid,.system-layout,.twin-layout,.analysis-grid{height:auto;min-height:690px}.dashboard-grid{grid-template-columns:1fr 1fr}.dashboard-grid>.panel:last-child{grid-column:1/3}.analysis-grid{grid-template-columns:1fr 1fr}.analysis-span{grid-row:auto}.metric-grid{grid-template-columns:repeat(3,1fr)}}
-  </style>
+
+    /* Lightweight axonometric campus: all object geometry stays in one scalable scene. */
+    .twin-stage{background:radial-gradient(ellipse at 50% 44%,#fff 0,#eff6fb 60%,#e4eff8 100%);perspective:none}
+    .twin-stage:after{display:none}
+    .plant,.plant.view-cascade,.plant.view-feed{position:absolute;inset:48px 0 20px;left:0;top:48px;width:100%;height:calc(100% - 68px);transform:none;z-index:2}
+    .campus-svg{width:100%;height:100%;display:block;overflow:visible}
+    .campus-world{transform-origin:50% 52%;transition:transform .65s ease}
+    .view-cascade .campus-world{transform:translate(60px,75px) scale(1.3)}
+    .view-feed .campus-world{transform:translate(-125px,20px) scale(1.3)}
+    .campus-object{cursor:pointer;outline:none}
+    .campus-object:hover .selection-pad,.campus-object:focus .selection-pad{stroke:#1976e6;stroke-width:3;fill:#b4d9ff;fill-opacity:.6}
+    .campus-object:focus{filter:drop-shadow(0 0 4px #217ada)}
+    .campus-label{font-family:inherit;pointer-events:none}
+    .campus-label text{fill:#294f71;font-size:12px;font-weight:700}
+    .campus-callout rect{fill:#fff;stroke:#aecde5;stroke-width:1}
+    .campus-callout text{fill:#6f859a;font-size:10px}
+    .campus-callout .reading{fill:#205b8b;font-size:17px;font-weight:750}
+    .campus-callout.alarm rect{stroke:#ee9872}
+    .campus-callout.alarm .reading{fill:#cf563a}
+    .campus-beacon{fill:#ea624b;stroke:#fff;stroke-width:2}
+    .campus-halo{fill:none;stroke:#e66b4a;stroke-width:2;opacity:.65}
+    .scene-legend{position:absolute;left:18px;bottom:15px;display:flex;gap:15px;align-items:center;color:#71899f;font-size:10px;z-index:6}
+    .scene-legend i{display:inline-block;width:7px;height:7px;border-radius:50%;background:#25a97b;margin-right:5px}
+    .scene-legend .alarm-dot{background:#ed7454}
+    .scene-controls{position:absolute;right:16px;bottom:14px;z-index:6;display:flex;gap:5px}
+    .scene-controls button{border:1px solid #c2d6e9;background:#fff;border-radius:6px;color:#406787;min-width:32px;height:32px;font-size:16px}
+    .scene-controls button:last-child{font-size:11px;padding:0 12px}
+    .scene-controls button:disabled{opacity:.4;cursor:default}
+    @media(prefers-reduced-motion:reduce){.campus-world{transition:none}}
+
+</style>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute"><defs>
@@ -149,14 +179,9 @@
       <div class="twin-layout">
         <section class="panel"><div class="panel-head"><div class="panel-title">五期厂区实时场景</div><div class="panel-actions"><span class="tag blue">286个部件已挂接</span></div></div><div class="twin-stage">
           <div class="twin-tools"><button class="view-chip active" data-twin-view="all">总览</button><button class="view-chip" data-twin-view="cascade">级联区</button><button class="view-chip" data-twin-view="feed">供取料区</button></div><div class="compass">N</div>
-          <div class="plant" id="plant">
-            <button class="iso-building active device-hit" style="left:80px;top:90px;width:175px;height:115px" data-device="五期级联厂房"><b>五期级联厂房</b></button>
-            <button class="iso-building alert device-hit" style="left:300px;top:45px;width:140px;height:105px" data-device="三级联机组"><b>三级联机组</b></button>
-            <button class="iso-building device-hit" style="left:480px;top:105px;width:160px;height:95px" data-device="供取料厂房"><b>供取料厂房</b></button>
-            <button class="iso-building device-hit" style="left:230px;top:245px;width:205px;height:92px" data-device="动力保障区"><b>动力保障区</b></button>
-            <button class="tank device-hit" style="left:40px;top:255px" data-device="原料储罐"></button><button class="tank device-hit" style="left:115px;top:270px" data-device="产品储罐"></button><button class="tank device-hit" style="left:535px;top:255px" data-device="冷却水罐"></button>
-          </div>
-          <button class="twin-label device-hit" style="left:20%;top:22%" data-device="五期级联厂房">运行率<b>96.4%</b></button><button class="twin-label alert device-hit" style="left:49%;top:18%" data-device="三级联机组">入口压力<b style="color:#d64b2d">186.4 kPa</b></button><button class="twin-label" style="right:16%;top:32%">供料流量<b>63.8 m³/h</b></button><button class="twin-label" style="left:39%;bottom:18%">冷却水温<b>28.6 ℃</b></button>
+          <div class="plant" id="plant"></div>
+          <div class="scene-legend"><span><i></i>运行正常</span><span><i class="alarm-dot"></i>告警定位</span><span>厂区外观示意</span></div>
+          <div class="scene-controls"><button type="button" data-scene-zoom="out" aria-label="缩小场景">−</button><button type="button" data-scene-zoom="in" aria-label="放大场景">＋</button><button type="button" data-scene-reset>复位视角</button></div>
         </div></section>
         <aside class="side-stack"><div class="kpi-strip"><div class="mini-kpi"><span>模型部件</span><b>286</b></div><div class="mini-kpi"><span>挂接测点</span><b>54</b></div><div class="mini-kpi"><span>在线设备</span><b>42 / 43</b></div><div class="mini-kpi"><span>高亮告警</span><b style="color:#df4350">1</b></div></div>
           <section class="panel"><div class="panel-head"><div class="panel-title">场景设备</div></div><div class="panel-body"><div class="device-list"><div class="device-row"><div><b>五期级联厂房</b><span>18台核心设备</span></div><span class="tag">正常</span></div><div class="device-row"><div><b>三级联机组</b><span>入口压力持续越限</span></div><span class="tag red">紧急</span></div><div class="device-row"><div><b>供取料厂房</b><span>2个区段警告</span></div><span class="tag orange">警告</span></div><div class="device-row"><div><b>动力保障区</b><span>全部设备在线</span></div><span class="tag">正常</span></div><div class="device-row"><div><b>储罐区</b><span>液位状态正常</span></div><span class="tag">正常</span></div></div></div></section>
@@ -189,6 +214,111 @@
 <div class="prototype-switcher" id="prototypeSwitcher"><button id="prevVariant">←</button><span id="variantLabel">A — 指挥中心布局</span><button id="nextVariant">→</button></div>
 
 <script>
+
+  // Generic exterior geometry; it depicts no real facility dimensions or process layout.
+  function renderCampus(){
+    const project=(x,y,z=0)=>[390+(x-y)*.95,98+(x+y)*.48-z];
+    const pts=a=>a.map(v=>project(...v).map(n=>n.toFixed(1)).join(',')).join(' ');
+    const polygon=(a,fill,stroke='#93adc2',extra='')=>'<polygon points="'+pts(a)+'" fill="'+fill+'" stroke="'+stroke+'" stroke-width=".8" '+extra+'/>';
+    const line=(a,b,color='#b9cbd9',width=1,extra='')=>'<line x1="'+project(...a)[0]+'" y1="'+project(...a)[1]+'" x2="'+project(...b)[0]+'" y2="'+project(...b)[1]+'" stroke="'+color+'" stroke-width="'+width+'" '+extra+'/>';
+    const slab=(x,y,w,d,fill)=>polygon([[x,y,0],[x+w,y,0],[x+w,y+d,0],[x,y+d,0]],fill);
+    const box=(x,y,w,d,h,roof='#d8e6ef',z=0)=>polygon([[x,y+d,z],[x+w,y+d,z],[x+w,y+d,z+h],[x,y+d,z+h]],'#a3bbc9')+polygon([[x+w,y,z],[x+w,y+d,z],[x+w,y+d,z+h],[x+w,y,z+h]],'#7d9caf')+polygon([[x,y,z+h],[x+w,y,z+h],[x+w,y+d,z+h],[x,y+d,z+h]],roof);
+    const circle=(x,y,z,r,fill,extra='')=>{const p=project(x,y,z);return '<circle cx="'+p[0]+'" cy="'+p[1]+'" r="'+r+'" fill="'+fill+'" '+extra+'/>'};
+    let ground=polygon([[-18,-18,-8],[558,-18,-8],[558,378,-8],[-18,378,-8]],'#aec4d3')+slab(-18,-18,576,396,'#e0e9ec');
+    ground+=slab(0,0,540,360,'#cbd8de');
+    ground+=slab(24,24,492,312,'#aebfc9');
+    ground+=slab(49,49,442,262,'#dae5e9');
+    ground+=slab(49,167,442,29,'#aebfc9');
+    ground+=slab(276,49,30,262,'#aebfc9');
+    ground+=line([36,36],[504,36],'#eef4f7',1.5,'stroke-dasharray="9 9"')+line([36,324],[504,324],'#eef4f7',1.5,'stroke-dasharray="9 9"')+line([36,36],[36,324],'#eef4f7',1.5,'stroke-dasharray="9 9"')+line([504,36],[504,324],'#eef4f7',1.5,'stroke-dasharray="9 9"')+line([291,55],[291,300],'#eef4f7',1.2,'stroke-dasharray="8 8"');
+    for(let i=0;i<6;i++)ground+=slab(50+i*5,170,2.5,23,'#edf4f8');
+    ground+=slab(58,205,95,93,'#c5d5d2')+slab(67,213,78,76,'#dce7e7');
+    ground+=slab(310,60,174,96,'#d9e3e7')+slab(60,53,210,106,'#d9e3e7');
+    ground+=slab(163,222,102,78,'#bed6c4');
+    for(let i=0;i<7;i++)ground+=line([326+i*21,293],[326+i*21,310],'#eff5f7',1.5);
+    // Perimeter and lamp posts.
+    for(let x=0;x<=540;x+=30)ground+=line([x,0,0],[x,0,12],'#809aad',1);
+    ground+=line([0,0,10],[540,0,10],'#93aebe',1);
+    const objects=[],objectLabels=[];
+    function tree(x,y){let s=circle(x+4,y+6,0,10,'#89a4a0','opacity=".2"')+line([x,y,0],[x,y,21],'#84978f',3)+circle(x,y,25,9,'#79a995')+circle(x-4,y-2,29,6,'#9abea7');objects.push({depth:x+y,svg:s})}
+    for(let x=10;x<540;x+=30){tree(x,10);tree(x,350)}
+    for(let y=50;y<340;y+=35){tree(10,y);tree(530,y)}
+    for(let x=183;x<260;x+=26)tree(x,267);
+    function hall(x,y,w,d,h,name,alarm=false){
+      const accent=alarm?'#d57b50':'#5d93bb';
+      let s=polygon([[x-5,y-5,0],[x+w+5,y-5,0],[x+w+5,y+d+5,0],[x-5,y+d+5,0]],alarm?'#f7d7c2':'#d2e3ed',alarm?'#e39769':'#b4cbdc','class="selection-pad"');
+      s+=polygon([[x+12,y+10,0],[x+w+22,y+12,0],[x+w+30,y+d+24,0],[x+18,y+d+20,0]],'#7591a1','none','opacity=".2"');
+      s+=box(x,y,w,d,h);
+      // Cladding seams, glazing strips and access doors.
+      for(let i=7;i<w;i+=9)s+=line([x+i,y+d,3],[x+i,y+d,h-3],'#90a8b9',.6);
+      for(let i=9;i<w-10;i+=20)s+=polygon([[x+i,y+d,h-14],[x+i+14,y+d,h-14],[x+i+14,y+d,h-6],[x+i,y+d,h-6]],'#4b7e9d','#8daabf');
+      for(let j=7;j<d-8;j+=17)s+=polygon([[x+w,y+j,h-15],[x+w,y+j+12,h-15],[x+w,y+j+12,h-6],[x+w,y+j,h-6]],'#406f8d','#9eb7c8');
+      s+=polygon([[x+w*.35,y+d,0],[x+w*.35+24,y+d,0],[x+w*.35+24,y+d,20],[x+w*.35,y+d,20]],'#66879d');
+      for(let z=3;z<20;z+=4)s+=line([x+w*.35,y+d,z],[x+w*.35+24,y+d,z],'#b0c6d3',.7);
+      s+=line([x,y+d,5],[x+w,y+d,5],accent,4)+line([x+w,y,5],[x+w,y+d,5],accent,4);
+      // Two pitched roof faces and repeated metal roof seams.
+      s+=polygon([[x-3,y-3,h],[x+w+3,y-3,h],[x+w+3,y+d/2,h+12],[x-3,y+d/2,h+12]],'#eef4f7','#a3bac9');
+      s+=polygon([[x-3,y+d/2,h+12],[x+w+3,y+d/2,h+12],[x+w+3,y+d+3,h],[x-3,y+d+3,h]],'#bfd3df','#91adbf');
+      for(let i=5;i<w;i+=8)s+=line([x+i,y-2,h+.5],[x+i,y+d/2,h+12],'#c8d9e3',.7)+line([x+i,y+d/2,h+12],[x+i,y+d+2,h+.5],'#9cb9cd',.7);
+      s+=line([x-3,y+d/2,h+12],[x+w+3,y+d/2,h+12],accent,2);
+      for(let i=20;i<w-15;i+=42)s+=box(x+i,y+d/2-6,18,12,5,'#e8f2f8',h+10);
+      if(alarm){s+=circle(x+w*.65,y+d*.5,h+32,10,'none','class="campus-halo"');s+=circle(x+w*.65,y+d*.5,h+32,5,'#e7654d','class="campus-beacon"')}
+      const p=project(x+w*.55,y+d+13,0);
+      objectLabels.push('<g class="campus-label"><rect x="'+(p[0]-56)+'" y="'+(p[1]-1)+'" width="112" height="22" rx="4" fill="#ffffff" fill-opacity=".93"/><text x="'+p[0]+'" y="'+(p[1]+14)+'" text-anchor="middle">'+name+'</text></g>');
+      objects.push({depth:x+y+d,svg:'<g class="campus-object device-hit" role="button" tabindex="0" aria-label="查看'+name+'" data-device="'+name+'">'+s+'</g>'});
+    }
+    hall(69,63,188,83,43,'五期级联厂房');
+    hall(322,65,147,80,49,'供取料厂房');
+    hall(173,207,91,49,32,'三级联机组',true);
+    hall(323,213,150,67,37,'动力保障区');
+    function tank(x,y,r,h,name){
+      const p=project(x,y),top=project(x,y,h);let s=slab(x-r-5,y-r-5,2*r+10,2*r+10,'#beced7');
+      s+='<ellipse cx="'+(p[0]+9)+'" cy="'+(p[1]+6)+'" rx="'+(r*1.5)+'" ry="'+r*.6+'" fill="#7f99ab" opacity=".22"/>';
+      s+='<path d="M'+(p[0]-r)+' '+top[1]+'V'+p[1]+' A'+r+' '+r*.44+' 0 0 0 '+(p[0]+r)+' '+p[1]+'V'+top[1]+'Z" fill="url(#tankSteel)" stroke="#829fb5"/>';
+      for(let z=9;z<h;z+=13){const q=project(x,y,z);s+='<path d="M'+(q[0]-r)+' '+q[1]+'a'+r+' '+r*.44+' 0 0 0 '+r*2+' 0" fill="none" stroke="#b0c6d4" stroke-width="1"/>'}
+      s+='<ellipse cx="'+top[0]+'" cy="'+top[1]+'" rx="'+r+'" ry="'+r*.44+'" fill="#e9f1f6" stroke="#829fb5"/><ellipse cx="'+top[0]+'" cy="'+(top[1]-1)+'" rx="'+r*.76+'" ry="'+r*.31+'" fill="none" stroke="#b7ccd9"/>';
+      s+=box(x-3,y-3,6,6,5,'#a2bdcd',h);
+      const label=project(x,y+10,-16);s+='<text x="'+label[0]+'" y="'+label[1]+'" text-anchor="middle" fill="#50748d" font-size="10">'+name+'</text>';
+      objects.push({depth:x+y+25,svg:'<g class="campus-object device-hit" role="button" tabindex="0" data-device="'+name+'" aria-label="查看'+name+'">'+s+'</g>'});
+    }
+    tank(90,229,19,44,'原料储罐');tank(126,257,19,44,'产品储罐');tank(462,176,14,27,'冷却水罐');
+    // Exterior overhead utility gallery, drawn as decorative campus infrastructure.
+    let gallery='';
+    for(let x=88;x<470;x+=42)gallery+=line([x,184,0],[x,184,19],'#7899ad',2)+line([x,175,19],[x,190,19],'#7899ad',2);
+    for(let y=178;y<=188;y+=4)gallery+=line([88,y,21],[469,y,21],y===182?'#84b4cf':'#c0d5e1',3.2);
+    objects.push({depth:420,svg:gallery});
+    for(let x=345;x<449;x+=32)objects.push({depth:x+304,svg:box(x,299,12,23,7,x%2?'#5b859f':'#eef5f9')});
+    for(const [x,y] of [[40,160],[291,160],[500,160],[40,307],[500,307]]){
+      let s=line([x,y,0],[x,y,32],'#7395ab',1.6)+line([x,y,32],[x+9,y,32],'#7395ab',1.6)+circle(x+9,y,32,2,'#fff');
+      objects.push({depth:x+y,svg:s});
+    }
+    let labels='';
+    function callout(x,y,z,title,value,alarm,name){
+      const p=project(x,y,z),w=126,h=53;
+      labels+='<g class="campus-callout '+(alarm?'alarm':'')+' campus-object device-hit" role="button" tabindex="0" data-device="'+name+'" aria-label="查看'+name+'"><path d="M'+p[0]+' '+(p[1]+h)+'v22" stroke="'+(alarm?'#e19167':'#9bbbd3')+'" stroke-dasharray="3 3"/><circle cx="'+p[0]+'" cy="'+(p[1]+h+22)+'" r="3" fill="'+(alarm?'#e87955':'#438fc7')+'"/><rect x="'+(p[0]-w/2)+'" y="'+p[1]+'" width="'+w+'" height="'+h+'" rx="7"/><text x="'+p[0]+'" y="'+(p[1]+18)+'" text-anchor="middle">'+title+'</text><text class="reading" x="'+p[0]+'" y="'+(p[1]+40)+'" text-anchor="middle">'+value+'</text></g>';
+    }
+    callout(140,65,126,'运行率','96.4%',false,'五期级联厂房');
+    callout(409,65,142,'供料流量','63.8 m³/h',false,'供取料厂房');
+    callout(223,226,140,'入口压力','186.4 kPa',true,'三级联机组');
+    callout(570,120,80,'冷却水温','28.6 ℃',false,'冷却水罐');
+    const defs='<defs><linearGradient id="tankSteel"><stop stop-color="#86a6bd"/><stop offset=".32" stop-color="#e9f2f7"/><stop offset=".58" stop-color="#fff"/><stop offset="1" stop-color="#9bb9ce"/></linearGradient></defs>';
+    document.getElementById('plant').innerHTML='<svg class="campus-svg" viewBox="0 0 1000 630" aria-label="五期厂区建筑与设备场景">'+defs+'<g class="campus-world"><g id="campusZoom">'+ground+objects.sort((a,b)=>a.depth-b.depth).map(o=>o.svg).join('')+objectLabels.join('')+labels+'</g></g></svg>';
+  }
+  renderCampus();
+  let campusZoom=1;
+  function zoomCampus(step){
+    campusZoom=Math.max(.8,Math.min(1.5,campusZoom+step));
+    document.getElementById('campusZoom').setAttribute('transform','translate(500 315) scale('+campusZoom+') translate(-500 -315)');
+    document.querySelector('[data-scene-zoom="out"]').disabled=campusZoom<=.8;
+    document.querySelector('[data-scene-zoom="in"]').disabled=campusZoom>=1.5;
+  }
+  document.addEventListener('click',e=>{
+    const z=e.target.closest('[data-scene-zoom]'),r=e.target.closest('[data-scene-reset]');
+    if(z)zoomCampus(z.dataset.sceneZoom==='in'?.1:-.1);
+    if(r){campusZoom=1;zoomCampus(0);document.querySelector('[data-twin-view="all"]').click()}
+  });
+  document.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.matches('.campus-object')){e.preventDefault();e.target.dispatchEvent(new MouseEvent('click',{bubbles:true}))}});
+
   const viewOrder=['overview','cascade','feed','twin','analysis'];
   let currentView='overview',rotateTimer=null,wasRotating=false;
   const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
@@ -210,7 +340,7 @@
   function deviceModal(name='五期三级联机组'){activeDeviceName=name||'五期三级联机组';openModal(`设备详情 · ${activeDeviceName}`,`<div class="detail-banner"><div class="device-symbol">▣</div><div><h4>${activeDeviceName}</h4><p>DEV-5-003 · 五期产线 · 级联设备</p></div><span class="tag red" style="margin-left:auto">压力异常</span></div><div class="modal-tabs"><button class="modal-tab active" data-device-tab="base">基础信息</button><button class="modal-tab" data-device-tab="realtime">实时数据</button><button class="modal-tab" data-device-tab="history">历史曲线</button><button class="modal-tab" data-device-tab="alarms">关联告警</button></div><div class="device-tab-content" id="deviceTabContent">${deviceTabMarkup('base')}</div><div class="modal-actions"><button class="btn" data-close>关闭</button><button class="btn primary" data-business>业务平台处置</button></div>`)}
   function pointModal(name='入口压力'){openModal(`测点曲线 · ${name}`,`<div class="kpi-strip" style="grid-template-columns:repeat(4,1fr);margin-bottom:14px"><div class="mini-kpi"><span>当前值</span><b style="color:#df4350">186.4</b></div><div class="mini-kpi"><span>理想区间</span><b>120–160</b></div><div class="mini-kpi"><span>30分钟变化</span><b>+18.6%</b></div><div class="mini-kpi"><span>预警等级</span><b style="color:#df4350">紧急</b></div></div>${chartMarkup()}<div class="param-chips"><button class="param-chip active">近1小时</button><button class="param-chip">近8小时</button><button class="param-chip">近24小时</button><button class="param-chip">历史同期</button></div><div class="modal-actions"><button class="btn" data-close>关闭</button><button class="btn primary" data-export>导出曲线</button></div>`)}
   function alarmModal(level='urgent'){const m=level==='urgent'?['紧急预警','入口压力持续越限','五期三级联机组','186.4 kPa','立即核查调压阀、系统漏量及现场设备状态。','red']:level==='warning'?['警告预警','二段压力波动偏大','03供取料二段','168.2 kPa','重点监视压力变化，检查上下游流量与阀位。','orange']:['提示预警','冷却水温偏离理想值','四期冷却系统','28.6 ℃','关注温度趋势并检查换热效率。','yellow'];openModal(m[0],`<div class="detail-banner" style="background:linear-gradient(110deg,#b74a2c,#e16a3e)"><div class="device-symbol">!</div><div><h4>${m[1]}</h4><p>2026-09-21 20:16:24 · ${m[2]}</p></div><span class="tag ${m[5]}" style="margin-left:auto">${m[0]}</span></div><div class="detail-grid"><div class="detail-item"><small>异常位置</small><b>${m[2]}</b></div><div class="detail-item"><small>触发值</small><b>${m[3]}</b></div><div class="detail-item"><small>持续时间</small><b>42分钟</b></div><div class="detail-item"><small>影响范围</small><b>三级联区段</b></div><div class="detail-item"><small>历史相似案例</small><b>3次</b></div><div class="detail-item"><small>事件状态</small><b>待处置</b></div></div><h4 style="margin:16px 0 8px">处置建议</h4><div style="border:1px solid #f0d0c0;background:#fff8f5;border-radius:8px;padding:12px;color:#6d4a3a">${m[4]}</div><div class="modal-actions"><button class="btn" data-locate="${level}">定位设备</button><button class="btn primary" data-business>业务平台处置</button></div>`)}
-  document.addEventListener('click',e=>{const t=e.target.closest('button');if(!t)return;if(t.dataset.view)showView(t.dataset.view);if(t.classList.contains('device-hit')||t.dataset.open==='device')deviceModal(t.dataset.device);if(t.classList.contains('point-hit')||t.dataset.open==='curve')pointModal(t.dataset.point);if(t.dataset.deviceTab)renderDeviceTab(t.dataset.deviceTab);if(t.dataset.historyRange){t.parentElement.querySelectorAll('[data-history-range]').forEach(x=>x.classList.remove('active'));t.classList.add('active');toast(`已切换${t.textContent}曲线`)}if(t.dataset.refreshPoints!==undefined){updateLive();toast('实时测点已刷新')}if(t.dataset.historyPoint!==undefined){t.textContent=t.textContent==='切换测点'?'当前：轴承温度':'切换测点';toast('历史曲线测点已切换')}if(t.dataset.alarm)alarmModal(t.dataset.alarm);if(t.dataset.close!==undefined)closeModal();if(t.dataset.business!==undefined)window.open('https://lzmochen.github.io/504-data-platform-prototype/v2-1/','_blank');if(t.dataset.export!==undefined)toast('曲线数据已生成演示文件');if(t.dataset.locate){closeModal();showView(t.dataset.locate==='urgent'?'cascade':'feed');toast('已定位到异常设备');}if(t.classList.contains('param-chip')&&!t.dataset.historyRange)t.classList.toggle('active')});
+  document.addEventListener('click',e=>{const t=e.target.closest('button, .campus-object');if(!t)return;if(t.dataset.view)showView(t.dataset.view);if(t.classList.contains('device-hit')||t.dataset.open==='device')deviceModal(t.dataset.device);if(t.classList.contains('point-hit')||t.dataset.open==='curve')pointModal(t.dataset.point);if(t.dataset.deviceTab)renderDeviceTab(t.dataset.deviceTab);if(t.dataset.historyRange){t.parentElement.querySelectorAll('[data-history-range]').forEach(x=>x.classList.remove('active'));t.classList.add('active');toast(`已切换${t.textContent}曲线`)}if(t.dataset.refreshPoints!==undefined){updateLive();toast('实时测点已刷新')}if(t.dataset.historyPoint!==undefined){t.textContent=t.textContent==='切换测点'?'当前：轴承温度':'切换测点';toast('历史曲线测点已切换')}if(t.dataset.alarm)alarmModal(t.dataset.alarm);if(t.dataset.close!==undefined)closeModal();if(t.dataset.business!==undefined)window.open('https://lzmochen.github.io/504-data-platform-prototype/v2-1/','_blank');if(t.dataset.export!==undefined)toast('曲线数据已生成演示文件');if(t.dataset.locate){closeModal();showView(t.dataset.locate==='urgent'?'cascade':'feed');toast('已定位到异常设备');}if(t.classList.contains('param-chip')&&!t.dataset.historyRange)t.classList.toggle('active')});
   $('#modalClose').onclick=closeModal;$('#modalLayer').addEventListener('click',e=>{if(e.target===$('#modalLayer'))closeModal()});
   $('#rotateBtn').onclick=()=>rotateTimer?stopRotate():startRotate();$('#refreshBtn').onclick=()=>{updateLive();toast('实时数据已刷新')};$('#fullBtn').onclick=()=>{if(!document.fullscreenElement)document.documentElement.requestFullscreen().catch(()=>toast('当前浏览器不支持全屏'));else document.exitFullscreen()};
   $$('.view-chip').forEach(b=>b.onclick=()=>{$$('.view-chip').forEach(x=>x.classList.remove('active'));b.classList.add('active');const p=$('#plant');p.className='plant'+(b.dataset.twinView==='all'?'':` view-${b.dataset.twinView}`)});
