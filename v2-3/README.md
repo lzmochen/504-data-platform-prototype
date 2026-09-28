@@ -37,7 +37,7 @@
 ## 对比链接
 
 - 修改前：https://lzmochen.github.io/504-data-platform-prototype/v2-2/?v=20260923-2
-- 修改后：https://lzmochen.github.io/504-data-platform-prototype/v2-3/?v=20260928-1
+- 修改后：https://lzmochen.github.io/504-data-platform-prototype/v2-3/?v=20260928-2
 
 ## 实现范围
 
