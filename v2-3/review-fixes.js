@@ -359,6 +359,14 @@
     if (event.target.matches('#reviewRuleForm [name="pointCode"]')) pointChanged();
     if (event.target.name === 'reviewImportPolicy') { state.reviewImport.policy = event.target.value; showImport(3); }
   });
+  document.addEventListener('input',event => {
+    if (!event.target.matches('#reviewRuleForm [name^="value"]')) return;
+    const form = document.getElementById('reviewRuleForm');
+    const point = state.points.find(p => p.code === form.elements.pointCode.value);
+    if (point && ['浮点型','整型'].includes(point.type) && [...form.querySelectorAll('[name^="value"]')].every(input => input.value !== '' && input.validity.valid)) {
+      document.getElementById('reviewRuleError').textContent = '';
+    }
+  });
   document.addEventListener('submit',event => {
     if (event.target.matches('#reviewMasterForm,#reviewPermissionForm,#reviewRuleForm')) event.preventDefault();
   });
